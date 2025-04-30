@@ -13,10 +13,11 @@ const diskStorage = multer.diskStorage({
 })
 */
 
+/*
 const memStorage = multer.memoryStorage();
-
+*/
 
 
 export const upload = multer({
-    storage: memStorage
+    dest: "./public/uploads/"
 });

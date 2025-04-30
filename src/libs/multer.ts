@@ -19,5 +19,5 @@ const memStorage = multer.memoryStorage();
 
 
 export const upload = multer({
-    dest: "./public/uploads/"
+    dest: "./public/tmp",
 });

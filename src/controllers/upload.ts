@@ -6,11 +6,13 @@ import fs from 'node:fs/promises';
 export const upload: RequestHandler = async (req, res) => {
 
     if (req.file) {
-        const newName = v4()+'.png';
-        const image = await sharp(req.file.path).toFormat('png').toFile('./public/images/' + newName);
+        const newName = v4()+'.jpg';
+        const image = await sharp(req.file.path).resize(1280, 720, {
+            fit: "cover"
+        }).toFormat('jpg').toFile('./public/images/' + newName);
         
         await fs.unlink(req.file.path); // Remove o arquivo temporário após o processamento
-        
+
     } else {
         console.log("Arquivo não encontrado");
     }

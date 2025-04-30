@@ -7,15 +7,23 @@ export const upload: RequestHandler = async (req, res) => {
 
     if (req.file) {
         const newName = v4() + '.jpg';
+
+
         const image = await sharp(req.file.path)
-        .resize(1280, 720, { fit: "cover" })
+            .resize(1280, 720, { fit: "cover" })
+            .toBuffer();
+
+        const finalImage = await sharp(image)
         .composite([
             {
-                input: './src/assets/logoMBLIVRE.png', gravity: 'centre'
+                input: "./src/assets/logoMBLIVRE.png"
             }
         ])
-        .toFormat('jpg')
-        .toFile('./public/images/' + newName);
+            .toFile("./public/images/" + newName);
+
+        const thumbImage = await sharp(image)
+            .resize(200)
+            .toFile("./public/images/thumbs-" + newName);
 
         await fs.unlink(req.file.path); // Remove o arquivo temporário após o processamento
 
